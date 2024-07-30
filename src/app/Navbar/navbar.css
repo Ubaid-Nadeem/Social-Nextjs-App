@@ -1,0 +1,18 @@
+.Nav-sidebar-web {
+    display: block;
+  }
+  .Nav-sidebar-mobile{
+    display: none;
+    color: white;
+  }
+
+
+
+@media (max-width: 800px) {
+  .Nav-sidebar-web {
+    display: none;
+  }
+  .Nav-sidebar-mobile{
+    display: block;
+  }
+}

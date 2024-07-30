@@ -9,10 +9,14 @@ import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
+import { blue } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Post } from "../usertype";
+import Divider from "@mui/material/Divider";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ModeCommentIcon from "@mui/icons-material/ModeComment";
+import ReplyIcon from "@mui/icons-material/Reply";
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
 }
@@ -30,10 +34,11 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
 
 type UserPost = {
   userPost: Post;
-  postIcon : string
+  postIcon: string;
+  userName : string
 };
 
-export default function RecipeReviewCard({ userPost ,postIcon }: UserPost) {
+export default function RecipeReviewCard({ userPost, postIcon,userName }: UserPost) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -43,7 +48,7 @@ export default function RecipeReviewCard({ userPost ,postIcon }: UserPost) {
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+          <Avatar sx={{ bgcolor: blue[800] }} aria-label="recipe">
             {postIcon}
           </Avatar>
         }
@@ -52,17 +57,60 @@ export default function RecipeReviewCard({ userPost ,postIcon }: UserPost) {
             <MoreVertIcon />
           </IconButton>
         }
-        title={userPost.title}
+        title={<div>
+          <h4 style={{margin:'0px',padding:'3px'}}>{userPost.title}</h4>
+          <p style={{margin:'0px',padding:'3px',fontSize:'11px'}}>Create by : {userName}</p>
+        </div>}
       />
+
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {userPost.content}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+      
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            fontSize: "14px",
+            color:'gray'
+          }}
+        >
+          <p
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "2px",
+            }}
+          >
+            <ThumbUpIcon /> <span>{userPost.likes}</span>
+          </p>
+          <p
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "2px",
+            }}
+          >
+            <ModeCommentIcon />
+            <span>0</span>
+          </p>
+          <p
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "2px",
+            }}
+          >
+            <ReplyIcon /> <span>0</span>
+          </p>
+        </div>
+        {/* <IconButton aria-label="add to favorites">
            <FavoriteIcon /> {userPost.likes}
-        </IconButton>
+        </IconButton> */}
       </CardActions>
     </Card>
   );

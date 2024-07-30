@@ -29,15 +29,32 @@ let users = [
           "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
         likes: 12,
       },
+      {
+        title: "Going to picnic",
+        content:
+          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
+        likes: 78,
+      },
+      {
+        title: "Going to picnic",
+        content:
+          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
+        likes: 8,
+      },
+      {
+        title: "Going to picnic",
+        content:
+          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
+        likes: 15,
+      },
     ],
     hobbies: [
-      "swimming",
-      "football",
-      "Computer programming",
-      "swimming",
-      "singing",
-      "Learning",
-      "Photography",
+      "swimming 🏄",
+      "football ⚽",
+      "Computer programming 💻",
+      "singing 🧑🏾‍🎤🎧ྀི",
+      "Learning 🎖✍️",
+      "Photography 📷",
     ],
   },
   {
@@ -51,14 +68,32 @@ let users = [
           "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
         likes: 6,
       },
+      {
+        title: "Going to picnic",
+        content:
+          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
+        likes: 12,
+      },
+      {
+        title: "Going to picnic",
+        content:
+          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
+        likes: 77,
+      },
+      {
+        title: "Going to picnic",
+        content:
+          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
+        likes: 5,
+      },
     ],
     hobbies: [
       "Computer programming",
-      "swimming",
-      "singing",
-      "Learning",
-      "Photography",
-      "Video Game",
+      "Music 🎸🎧ྀི",
+      "Bikes 🏍️👑",
+      "GYM 💪🏋🏻",
+      "Programing 💻❣️",
+      "Video Game 🎮💯",
       "Hiking",
     ],
   },
@@ -103,9 +138,8 @@ export default function Login({ changeAuthStatus, setUser }: LoginType) {
     if (userFound) {
       changeAuthStatus(true);
       setUser(userFound);
-    }
-    else{
-      alert('Incorrect email and password tryagain.')
+    } else {
+      alert("Incorrect email and password tryagain.");
     }
   }
 
