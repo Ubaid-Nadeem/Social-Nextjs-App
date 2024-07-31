@@ -4,11 +4,18 @@
     flex-wrap: wrap;
 
 }
+.card-container>div{
+  width: 50%;
+  margin: auto;
+}
 @media (max-width: 800px) {
     .card-container {
       align-items: center;
     }
     .hobbiesContainer{
       justify-content: center;
+    }
+    .card-container>div{
+      width: 100%;
     }
   }

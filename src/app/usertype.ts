@@ -8,6 +8,6 @@ export type UserType = {
   email: string;
   userName: string;
   password: string;
-  posts: Post[];
+  posts: Post[] | [];
   hobbies: string[];
 };

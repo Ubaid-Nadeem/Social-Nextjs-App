@@ -47,14 +47,17 @@ export default function Facebook({ user, setUser }: facebookType) {
                 return <Chip icon={<FaceIcon />} label={hobby} key={i} />;
               })
             )}
-            <span style={{cursor:'pointer'}}
+            <span
+              style={{ cursor: "pointer" }}
               onClick={() => {
                 if (user) {
                   let addHobby = prompt("what's your hobby");
                   if (addHobby) {
-                    // user.hobbies.push(addHobby as string);
-                    // setUser(user);
-                  alert(`Your new hobby is ${addHobby}! This feature is comming Soon!!`)
+                    let cloneHobbies = [...user.hobbies, addHobby];
+                    let cloneUser = { ...user, hobbies: cloneHobbies };
+                    setUser(cloneUser);
+
+                    // alert(`Your new hobby is ${addHobby}! This feature is comming Soon!!`)
                   }
                 }
               }}
@@ -62,35 +65,65 @@ export default function Facebook({ user, setUser }: facebookType) {
               <Chip label="Add Hobbies" color="primary" icon={<AddIcon />} />
             </span>
           </div>
-
         </div>
 
         <Divider />
 
-        <div style={{display:'flex',justifyContent:'space-between',width:'100%',alignItems:'center'}}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+            alignItems: "center",
+          }}
+        >
           <h3>Posts</h3>
-          <span style={{cursor:'pointer'}}>
-          <Chip label="Create Post" color="primary" icon={<CreateIcon />} />
+          <span
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              let postTitle = prompt("Post Title");
+              if (postTitle) {
+                let postDiscription = prompt("Post Discription");
+                if (postDiscription && user) {
+                  let newPost = {
+                    title: postTitle,
+                    content: postDiscription,
+                    likes: 0,
+                  };
+                  let clonePosts = [newPost, ...user?.posts];
+                  let cloneUser = { ...user, posts: clonePosts };
+                  setUser(cloneUser);
+                } else {
+                  return;
+                }
+              }
+            }}
+          >
+            <Chip label="Create Post" color="primary" icon={<CreateIcon />} />
           </span>
-
         </div>
+
         <div className="card-container">
-          {user?.posts.length == 0 ? (
-            <h4 style={{ textAlign: "center", width: "100%", color: "grey" }}>
-              No Posts
-            </h4>
-          ) : (
-            user?.posts.map((post, index) => {
-              return (
-                <RecipeReviewCard
-                  key={index}
-                  userPost={post}
-                  postIcon={chr}
-                  userName={user.userName}
-                />
-              );
-            })
-          )}
+          
+
+          <div>
+            {user?.posts.length == 0 ? (
+              <h4 style={{ textAlign: "center", width: "100%", color: "grey" }}>
+                No Posts
+              </h4>
+            ) : (
+              user?.posts.map((post, index) => {
+                return (
+                  <RecipeReviewCard
+                    key={index}
+                    userPost={post}
+                    postIcon={chr}
+                    userName={user.userName}
+                  />
+                );
+              })
+            )}
+          </div>
         </div>
       </div>
     </>

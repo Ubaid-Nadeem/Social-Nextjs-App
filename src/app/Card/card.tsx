@@ -45,7 +45,7 @@ export default function RecipeReviewCard({ userPost, postIcon,userName }: UserPo
     setExpanded(!expanded);
   };
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: '100%',margin : '10px' }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: blue[800] }} aria-label="recipe">
@@ -63,9 +63,10 @@ export default function RecipeReviewCard({ userPost, postIcon,userName }: UserPo
         </div>}
       />
 
-      <CardContent>
+      <CardContent style={{height:'content-fit'}}>
         <Typography variant="body2" color="text.secondary">
           {userPost.content}
+         
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

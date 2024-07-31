@@ -28,25 +28,7 @@ let users = [
         content:
           "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
         likes: 12,
-      },
-      {
-        title: "Going to picnic",
-        content:
-          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
-        likes: 78,
-      },
-      {
-        title: "Going to picnic",
-        content:
-          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
-        likes: 8,
-      },
-      {
-        title: "Going to picnic",
-        content:
-          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
-        likes: 15,
-      },
+      }
     ],
     hobbies: [
       "swimming 🏄",
@@ -73,19 +55,7 @@ let users = [
         content:
           "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
         likes: 12,
-      },
-      {
-        title: "Going to picnic",
-        content:
-          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
-        likes: 77,
-      },
-      {
-        title: "Going to picnic",
-        content:
-          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
-        likes: 5,
-      },
+      }
     ],
     hobbies: [
       "Computer programming",
@@ -107,20 +77,6 @@ export default function Login({ changeAuthStatus, setUser }: LoginType) {
   let [signupPassword, setSignupPassword] = useState("");
 
   const [isLogin, setIslogin] = useState(true);
-
-  // type userType = {
-  //   userName: string,
-  //   email: string,
-  //   password: string,
-  //   posts: [
-  //     {
-  //       title: "",
-  //       content: "",
-  //       likes: 10,
-  //     },
-  //   ],
-  //   hobbies: "",
-  // }
 
   function getUserNameAndPassword(e: any) {
     if (e.target.name == "email") {
@@ -158,17 +114,33 @@ export default function Login({ changeAuthStatus, setUser }: LoginType) {
   }
 
   function createAccout() {
-    alert("feature is comming soon!");
-    // let newUser: UserType = {
-    //   userName: signupName,
-    //   email: signupEmail,
-    //   password: signupPassword,
-    //   posts: [],
-    //   hobbies: [],
-    // };
-    // users.push(newUser);
-    // alert("Your account is Created!");
-    // console.log(users);
+    if (signupName.length >= 3) {
+      if (signupEmail.length > 1) {
+        if(signupPassword.length > 5){
+          let newUser = {
+            userName: signupName,
+            email: signupEmail,
+            password: signupPassword,
+            posts : [],
+            hobbies : []
+          };
+          
+          let cloneUsers = [...users,newUser]
+          users  = cloneUsers
+          alert('Your Account is created! You can login now')
+          setIslogin(!isLogin)
+          
+        }
+        else{
+          alert('Weak Password! enter a atleast 5 characters')
+        }
+      }
+      else{
+        alert('Invalid email')
+      }
+    } else {
+      alert("Invalid Name");
+    }
   }
   return (
     <>
@@ -212,20 +184,6 @@ export default function Login({ changeAuthStatus, setUser }: LoginType) {
               Sign up
             </span>{" "}
           </p>
-
-          {/* <input
-        type="text"
-        placeholder="Email"
-        name="email"
-       
-      />
-      <input
-        type="text"
-        placeholder="password"
-        name="password"
-        }
-      />
-      <button >Login</button> */}
         </div>
       ) : (
         <div id="signUpContainer">
