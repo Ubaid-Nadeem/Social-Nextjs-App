@@ -95,6 +95,9 @@ export default function Login({ changeAuthStatus, setUser }: LoginType) {
   }
 
   function loginHandler() {
+    let getAllUsers = JSON.parse(localStorage.getItem("socialUsers") as string);
+    setAllUsers(getAllUsers);
+    
     if (allUsers) {
       let [userFound] = allUsers.filter(
         (user) => user.email === userEmail && user.password === userPassword
