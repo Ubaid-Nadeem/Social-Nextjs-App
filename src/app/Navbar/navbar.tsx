@@ -28,7 +28,7 @@ type NavbarType = {
   Islogin: (e: any) => void;
 };
 
-export function TemporaryDrawer({ user ,logOutUser}: any) {
+export function TemporaryDrawer({ user, logOutUser }: any) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -68,7 +68,7 @@ export function TemporaryDrawer({ user ,logOutUser}: any) {
           <ListItemIcon>
             <PowerSettingsNewIcon />
           </ListItemIcon>
-          <ListItemText primary={"Logout"} onClick={logOutUser}/>
+          <ListItemText primary={"Logout"} onClick={logOutUser} />
         </ListItemButton>
       </ListItem>
     </Box>
@@ -111,6 +111,7 @@ export default function MenuAppBar({ user, setUser, Islogin }: NavbarType) {
     setUser(null);
     Islogin(false);
     setAuth(false);
+    localStorage.removeItem("activeUser");
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -150,7 +151,7 @@ export default function MenuAppBar({ user, setUser, Islogin }: NavbarType) {
                 </IconButton>
               </div>
               <div className="Nav-sidebar-mobile">
-                <TemporaryDrawer user={user} logOutUser={logOutUser}/>
+                <TemporaryDrawer user={user} logOutUser={logOutUser} />
               </div>
             </div>
           ) : (

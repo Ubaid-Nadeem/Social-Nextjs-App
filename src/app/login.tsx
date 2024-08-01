@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 import "./login.css";
 import { UserType } from "./usertype";
+import { json } from "stream/consumers";
 type LoginType = {
   changeAuthStatus: (status: boolean) => void;
   setUser: (user: any) => void;
@@ -28,7 +29,7 @@ let users = [
         content:
           "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
         likes: 12,
-      }
+      },
     ],
     hobbies: [
       "swimming 🏄",
@@ -55,7 +56,7 @@ let users = [
         content:
           "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
         likes: 12,
-      }
+      },
     ],
     hobbies: [
       "Computer programming",
@@ -75,8 +76,15 @@ export default function Login({ changeAuthStatus, setUser }: LoginType) {
   let [signupName, setSignupName] = useState("");
   let [signupEmail, setSignupEmail] = useState("");
   let [signupPassword, setSignupPassword] = useState("");
+  let [allUsers, setAllUsers] = useState<UserType[] | null>(null);
 
   const [isLogin, setIslogin] = useState(true);
+
+  useEffect(() => {
+    console.log("connected");
+    let getAllUsers = JSON.parse(localStorage.getItem("socialUsers") as string);
+    setAllUsers(getAllUsers);
+  }, []);
 
   function getUserNameAndPassword(e: any) {
     if (e.target.name == "email") {
@@ -87,15 +95,23 @@ export default function Login({ changeAuthStatus, setUser }: LoginType) {
   }
 
   function loginHandler() {
-    let [userFound] = users.filter(
-      (user) => user.email === userEmail && user.password === userPassword
-    );
-
-    if (userFound) {
-      changeAuthStatus(true);
-      setUser(userFound);
+    if (allUsers) {
+      let [userFound] = allUsers.filter(
+        (user) => user.email === userEmail && user.password === userPassword
+      );
+      if (userFound) {
+        changeAuthStatus(true);
+        setUser(userFound);
+        let activeUser = {
+          user: userFound,
+        };
+        localStorage.setItem("activeUser", JSON.stringify(activeUser));
+      } else {
+        alert("Incorrect email and password tryagain.");
+      }
     } else {
-      alert("Incorrect email and password tryagain.");
+      alert("please first sign up your account!");
+      setIslogin(!isLogin);
     }
   }
 
@@ -116,27 +132,25 @@ export default function Login({ changeAuthStatus, setUser }: LoginType) {
   function createAccout() {
     if (signupName.length >= 3) {
       if (signupEmail.length > 1) {
-        if(signupPassword.length > 5){
+        if (signupPassword.length > 5) {
           let newUser = {
             userName: signupName,
             email: signupEmail,
             password: signupPassword,
-            posts : [],
-            hobbies : []
+            posts: [],
+            hobbies: [],
           };
-          
-          let cloneUsers = [...users,newUser]
-          users  = cloneUsers
-          alert('Your Account is created! You can login now')
-          setIslogin(!isLogin)
-          
+
+          let cloneUsers = [...users, newUser];
+          users = cloneUsers;
+          localStorage.setItem("socialUsers", JSON.stringify(cloneUsers));
+          alert("Your Account is created! You can login now");
+          setIslogin(!isLogin);
+        } else {
+          alert("Weak Password! enter a atleast 5 characters");
         }
-        else{
-          alert('Weak Password! enter a atleast 5 characters')
-        }
-      }
-      else{
-        alert('Invalid email')
+      } else {
+        alert("Invalid email");
       }
     } else {
       alert("Invalid Name");
