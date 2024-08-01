@@ -10,67 +10,16 @@ import { json } from "stream/consumers";
 type LoginType = {
   changeAuthStatus: (status: boolean) => void;
   setUser: (user: any) => void;
+  loading: boolean;
+  setLoading: (e: any) => void;
 };
 
-let users = [
-  {
-    email: "ubaid@gmail.com",
-    password: "ubaid123",
-    userName: "Ubaid Nadeem",
-    posts: [
-      {
-        title: "Playing Circket",
-        content:
-          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
-        likes: 27,
-      },
-      {
-        title: "Going to picnic",
-        content:
-          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
-        likes: 12,
-      },
-    ],
-    hobbies: [
-      "swimming 🏄",
-      "football ⚽",
-      "Computer programming 💻",
-      "singing 🧑🏾‍🎤🎧ྀི",
-      "Learning 🎖✍️",
-      "Photography 📷",
-    ],
-  },
-  {
-    email: "moiz@gmail.com",
-    password: "moiz123",
-    userName: "Moiz",
-    posts: [
-      {
-        title: "Going to picnic",
-        content:
-          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
-        likes: 6,
-      },
-      {
-        title: "Going to picnic",
-        content:
-          "lLorem ipsum dolor sit amet consectetur adipisicing elit. Saepe velit cum aspernatur numquam asperiores sunt vero eligendi ut ducimus rerum aperiam officiis necessitatibus consequuntur cupiditate, unde voluptates dolore eaque quo!",
-        likes: 12,
-      },
-    ],
-    hobbies: [
-      "Computer programming",
-      "Music 🎸🎧ྀི",
-      "Bikes 🏍️👑",
-      "GYM 💪🏋🏻",
-      "Programing 💻❣️",
-      "Video Game 🎮💯",
-      "Hiking",
-    ],
-  },
-];
-
-export default function Login({ changeAuthStatus, setUser }: LoginType) {
+export default function Login({
+  changeAuthStatus,
+  setUser,
+  loading,
+  setLoading,
+}: LoginType) {
   let [userEmail, setUserEmail] = useState("");
   let [userPassword, setUserPassword] = useState("");
   let [signupName, setSignupName] = useState("");
@@ -81,9 +30,11 @@ export default function Login({ changeAuthStatus, setUser }: LoginType) {
   const [isLogin, setIslogin] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     console.log("connected");
     let getAllUsers = JSON.parse(localStorage.getItem("socialUsers") as string);
     setAllUsers(getAllUsers);
+    setLoading(false)
   }, []);
 
   function getUserNameAndPassword(e: any) {
@@ -95,16 +46,22 @@ export default function Login({ changeAuthStatus, setUser }: LoginType) {
   }
 
   function loginHandler() {
-    let getAllUsers = JSON.parse(localStorage.getItem("socialUsers") as string);
-    setAllUsers(getAllUsers);
+    setLoading(true);
     
-    if (allUsers) {
-      let [userFound] = allUsers.filter(
+    let getAllUsers: UserType[] | null = JSON.parse(
+      localStorage.getItem("socialUsers") as string
+    );
+    
+    setAllUsers(getAllUsers);
+
+    if (getAllUsers) {
+      let [userFound] = getAllUsers.filter(
         (user) => user.email === userEmail && user.password === userPassword
       );
       if (userFound) {
         changeAuthStatus(true);
         setUser(userFound);
+        setLoading(false);
         let activeUser = {
           user: userFound,
         };
@@ -113,8 +70,8 @@ export default function Login({ changeAuthStatus, setUser }: LoginType) {
         alert("Incorrect email and password tryagain.");
       }
     } else {
-      alert("please first sign up your account!");
-      setIslogin(!isLogin);
+      setLoading(false);
+      alert("User Not Found");
     }
   }
 
@@ -143,12 +100,19 @@ export default function Login({ changeAuthStatus, setUser }: LoginType) {
             posts: [],
             hobbies: [],
           };
-
-          let cloneUsers = [...users, newUser];
-          users = cloneUsers;
-          localStorage.setItem("socialUsers", JSON.stringify(cloneUsers));
-          alert("Your Account is created! You can login now");
-          setIslogin(!isLogin);
+          if (allUsers == null) {
+            let cloneUsers = [newUser];
+            allUsers = cloneUsers;
+            localStorage.setItem("socialUsers", JSON.stringify(cloneUsers));
+            alert("Your Account is created! You can login now");
+            setIslogin(!isLogin);
+          } else {
+            let cloneUsers = [...allUsers, newUser];
+            allUsers = cloneUsers;
+            localStorage.setItem("socialUsers", JSON.stringify(cloneUsers));
+            alert("Your Account is created! You can login now");
+            setIslogin(!isLogin);
+          }
         } else {
           alert("Weak Password! enter a atleast 5 characters");
         }

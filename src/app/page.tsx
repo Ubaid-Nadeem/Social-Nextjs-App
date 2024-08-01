@@ -35,7 +35,7 @@ export default function Home() {
             height: "100%",
             textAlign: "center",
             alignItems: "center",
-            marginTop:"20px"
+            marginTop: "20px",
           }}
         >
           Loading.....
@@ -46,7 +46,12 @@ export default function Home() {
           {islogin ? (
             <Facebook user={user} setUser={setUser} />
           ) : (
-            <Login changeAuthStatus={setIslogin} setUser={setUser} />
+            <Login
+              changeAuthStatus={setIslogin}
+              setUser={setUser}
+              loading={isloading}
+              setLoading={setIsLoading}
+            />
           )}
         </>
       )}
