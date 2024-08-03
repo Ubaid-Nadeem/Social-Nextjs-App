@@ -13,7 +13,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 300,
+  width: 270,
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
@@ -96,7 +96,7 @@ export default function TransitionsModal({ user, setUser }: ModelType) {
         }}
       >
         <Fade in={open}>
-          <Box sx={style}>
+          <Box sx={style} >
             <h2>New Post</h2>
             <TextField
               id="outlined-basic"

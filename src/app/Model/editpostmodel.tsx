@@ -4,22 +4,16 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { UserType } from "../usertype";
-import Chip from "@mui/material/Chip";
-import FaceIcon from "@mui/icons-material/Face";
-import AddIcon from "@mui/icons-material/Add";
-
-
-
-
 
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 280,
+  width: 270,
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
@@ -27,54 +21,33 @@ const style = {
 
 type ModelType = {
   user: UserType | null;
-  setUser: (e: any) => void;
+  postIndex: number;
 };
 
-export default function HobbyModel({ user, setUser }: ModelType) {
+export default function EditPostModel({ user, postIndex }: ModelType) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [newHobby, setNewHobby] = useState<string>("");
+  const [postTitle, setPostTitle] = useState<string | undefined>("");
+  const [postContent, setPostContent] = useState<string | undefined>("");
 
   function handleEvent(event: any) {
-    setNewHobby(event.target.value);
+    if (event.target.name == "postTitle") {
+      setPostTitle(event.target.value);
+    } else {
+      setPostContent(event.target.value);
+    }
   }
 
-  function addNewHobby() {
-    if (newHobby.length > 1 && user) {
-      let cloneHobbies = [...user?.hobbies, newHobby];
-      let cloneUser = { ...user, hobbies: cloneHobbies };
-      setUser(cloneUser);
-      localStorage.setItem("activeUser", JSON.stringify({ user: cloneUser }));
-
-      let getAllUsers: any = JSON.parse(
-        localStorage.getItem("socialUsers") as string
-      );
-      let currentUserIndex = 0;
-      getAllUsers.forEach((element: any, index: any) => {
-        if (
-          user.email === element.email &&
-          user.password === element.password
-        ) {
-          currentUserIndex = index;
-        }
-      });
-
-      getAllUsers[currentUserIndex] = cloneUser;
-      localStorage.setItem("socialUsers", JSON.stringify(getAllUsers));
-
-      handleClose();
-      setNewHobby("");
-    } else {
-      alert("please fill Input Field");
-    }
+  function updatePost() {
+    console.log(postTitle, postContent);
   }
 
   return (
     <div>
-      <span onClick={handleOpen}>
-      <Chip icon={<AddIcon />} label={"Add Hobbies"} color="primary" />
-      </span>
+        <span onClick={handleOpen}>
+        Edit
+        </span>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -90,20 +63,30 @@ export default function HobbyModel({ user, setUser }: ModelType) {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <h2>Add Hobbies</h2>
+            <h2>Edit Post</h2>
             <TextField
               id="outlined-basic"
-              label="New Hobby"
+              label="Post Title"
               variant="outlined"
               fullWidth
               style={{ marginBottom: "20px" }}
               onChange={handleEvent}
-              value={newHobby}
+              value={postTitle}
               name="postTitle"
             />
+            <TextField
+              id="outlined-basic"
+              label="Post Content"
+              variant="outlined"
+              fullWidth
+              style={{ marginBottom: "20px" }}
+              onChange={handleEvent}
+              value={postContent}
+              name="postContent"
+            />
 
-            <Button variant="contained" onClick={addNewHobby}>
-              Add
+            <Button variant="contained" onClick={updatePost}>
+              Save
             </Button>
             <Button
               variant="outlined"

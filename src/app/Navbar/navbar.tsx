@@ -22,6 +22,9 @@ import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import DehazeIcon from "@mui/icons-material/Dehaze";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import logo from "../../../public/MyApp.png";
+import Image from "next/image";
+
 type NavbarType = {
   user: UserType | null;
   setUser: (e: any) => void;
@@ -118,6 +121,7 @@ export default function MenuAppBar({ user, setUser, Islogin }: NavbarType) {
       <AppBar position="fixed">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            {/* <Image src={logo} alt="Logo"/> */}
             MyApp
           </Typography>
 

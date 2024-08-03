@@ -14,6 +14,10 @@ import { ReactNode } from "react";
 import CreateIcon from "@mui/icons-material/Create";
 import TransitionsModal from "./Model/postmodel";
 import HobbyModel from "./Model/hoobies";
+import List from '@mui/material/List';
+import { TransitionGroup } from 'react-transition-group';
+import Collapse from '@mui/material/Collapse';
+
 
 type facebookType = {
   user: UserType | null;
@@ -22,11 +26,13 @@ type facebookType = {
 
 export default function Facebook({ user, setUser }: facebookType) {
   let chr = "";
-
   function userPostIcon(userName: string) {
     let postIcon = userName.split(" ");
+
     for (let i = 0; i < postIcon.length; i++) {
-      chr += postIcon[i][0];
+      if (postIcon[i][0] != undefined) {
+        chr += postIcon[i][0];
+      }
     }
   }
 
@@ -80,7 +86,8 @@ export default function Facebook({ user, setUser }: facebookType) {
                       handleDelete(i);
                     }}
                     key={i}
-                    // <Chip icon={<FaceIcon />} label={hobby} key={i}
+                    icon={<FaceIcon />}
+                    // <Chip label={hobby} key={i}
                   />
                 );
               })
@@ -135,16 +142,24 @@ export default function Facebook({ user, setUser }: facebookType) {
                 No Posts
               </h4>
             ) : (
-              user?.posts.map((post, index) => {
-                return (
-                  <RecipeReviewCard
-                    key={index}
-                    userPost={post}
-                    postIcon={chr}
-                    userName={user.userName}
-                  />
-                );
-              })
+              <List sx={{ mt: 1 }}>
+                <TransitionGroup>
+                  {user?.posts.map((post, index) => {
+                    return (
+                      <Collapse key={index}>
+                      <RecipeReviewCard
+                        userPost={post}
+                        postIcon={chr}
+                        userName={user.userName}
+                        id={index}
+                        user={user}
+                        setUser={setUser}
+                      />
+                    </Collapse>
+                    );
+                  })}
+                </TransitionGroup>
+              </List>
             )}
           </div>
         </div>
