@@ -8,6 +8,8 @@ import MenuAppBar from "./Navbar/navbar";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+
 export default function Home() {
   let [islogin, setIslogin] = useState<boolean>(false);
   const [open, setOpen] = useState(true);
@@ -30,15 +32,16 @@ export default function Home() {
     <>
       {isloading ? (
         <div
-          style={{
-            width: "100%",
-            height: "100%",
-            textAlign: "center",
-            alignItems: "center",
-            marginTop: "20px",
-          }}
+        style={{
+          width: "100%",
+          height: "100%",
+          textAlign: "center",
+          alignItems: "center",
+          marginTop: "20px",
+        }}
         >
-          Loading.....
+           <CircularProgress disableShrink />
+          
         </div>
       ) : (
         <>

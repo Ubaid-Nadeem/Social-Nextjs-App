@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -96,7 +96,7 @@ export default function TransitionsModal({ user, setUser }: ModelType) {
         }}
       >
         <Fade in={open}>
-          <Box sx={style} >
+          <Box sx={style}>
             <h2>New Post</h2>
             <TextField
               id="outlined-basic"
@@ -109,7 +109,9 @@ export default function TransitionsModal({ user, setUser }: ModelType) {
               name="postTitle"
             />
             <TextField
-              id="outlined-basic"
+              multiline
+              rows={4}
+              id="outlined-multiline-static"
               label="Post Content"
               variant="outlined"
               fullWidth
@@ -120,7 +122,7 @@ export default function TransitionsModal({ user, setUser }: ModelType) {
             />
 
             <Button variant="contained" onClick={newPost}>
-              Create
+              Post
             </Button>
             <Button
               variant="outlined"

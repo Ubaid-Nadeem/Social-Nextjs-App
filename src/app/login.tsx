@@ -32,7 +32,7 @@ export default function Login({
   useEffect(() => {
     setLoading(true);
     console.log("connected");
-    let getAllUsers = JSON.parse(localStorage.getItem("socialUsers") as string);
+    let getAllUsers = JSON.parse(localStorage.getItem("socialUsers") as string) || [];
     setAllUsers(getAllUsers);
     setLoading(false)
   }, []);

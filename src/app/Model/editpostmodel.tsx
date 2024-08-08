@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -20,16 +20,22 @@ const style = {
 };
 
 type ModelType = {
-  user: UserType | null;
+  user: UserType;
   postIndex: number;
+  setUser: (e: any) => void;
 };
 
-export default function EditPostModel({ user, postIndex }: ModelType) {
+export default function EditPostModel({ user, postIndex,setUser }: ModelType) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [postTitle, setPostTitle] = useState<string | undefined>("");
-  const [postContent, setPostContent] = useState<string | undefined>("");
+  const [postTitle, setPostTitle] = useState<string>("");
+  const [postContent, setPostContent] = useState<string>("");
+
+  useEffect(() => {
+    setPostTitle(user?.posts[postIndex].title as string);
+    setPostContent(user?.posts[postIndex].content as string);
+  }, []);
 
   function handleEvent(event: any) {
     if (event.target.name == "postTitle") {
@@ -40,14 +46,44 @@ export default function EditPostModel({ user, postIndex }: ModelType) {
   }
 
   function updatePost() {
-    console.log(postTitle, postContent);
+    if (postTitle?.length > 1 && postContent?.length > 1) {
+      console.log(postTitle);
+      console.log(postContent);
+      let post = user?.posts;
+      post[postIndex].content = postContent;
+      post[postIndex].title = postTitle;
+      console.log(post)
+
+      let cloneUser = { ...user, posts: post };
+      setUser(cloneUser);
+
+      localStorage.setItem("activeUser", JSON.stringify({ user: cloneUser }));
+
+
+      let getAllUsers: any = JSON.parse(
+        localStorage.getItem("socialUsers") as string
+      );
+      let currentUserIndex = 0;
+      getAllUsers.forEach((element: any, index: any) => {
+        if (
+          user.email === element.email &&
+          user.password === element.password
+        ) {
+          currentUserIndex = index;
+        }
+      });
+
+      getAllUsers[currentUserIndex] = cloneUser;
+      localStorage.setItem("socialUsers", JSON.stringify(getAllUsers));
+
+      handleClose(  )
+
+    }
   }
 
   return (
     <div>
-        <span onClick={handleOpen}>
-        Edit
-        </span>
+      <span onClick={handleOpen}>Edit</span>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -75,7 +111,6 @@ export default function EditPostModel({ user, postIndex }: ModelType) {
               name="postTitle"
             />
             <TextField
-              id="outlined-basic"
               label="Post Content"
               variant="outlined"
               fullWidth
@@ -83,6 +118,9 @@ export default function EditPostModel({ user, postIndex }: ModelType) {
               onChange={handleEvent}
               value={postContent}
               name="postContent"
+              multiline
+              rows={4}
+              id="outlined-multiline-static"
             />
 
             <Button variant="contained" onClick={updatePost}>

@@ -189,7 +189,7 @@ export default function RecipeReviewCard({
           }}
         >
           <MenuItem>
-            <EditPostModel postIndex={id} user={user}/>
+            <EditPostModel postIndex={id} user={user} setUser={setUser} />
           </MenuItem>
           <MenuItem onClick={deletePOst}>Delete</MenuItem>
         </Menu>
