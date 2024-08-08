@@ -64,6 +64,7 @@ export default function RecipeReviewCard({
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    
   };
 
   const deletePOst = () => {
@@ -189,7 +190,7 @@ export default function RecipeReviewCard({
           }}
         >
           <MenuItem>
-            <EditPostModel postIndex={id} user={user} setUser={setUser} />
+            <EditPostModel postIndex={id} user={user} setUser={setUser} setAnchorEl={setAnchorEl}/>
           </MenuItem>
           <MenuItem onClick={deletePOst}>Delete</MenuItem>
         </Menu>

@@ -23,9 +23,10 @@ type ModelType = {
   user: UserType;
   postIndex: number;
   setUser: (e: any) => void;
+  setAnchorEl : (e:any)=>void
 };
 
-export default function EditPostModel({ user, postIndex,setUser }: ModelType) {
+export default function EditPostModel({ user, postIndex,setUser,setAnchorEl }: ModelType) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -47,13 +48,11 @@ export default function EditPostModel({ user, postIndex,setUser }: ModelType) {
 
   function updatePost() {
     if (postTitle?.length > 1 && postContent?.length > 1) {
-      console.log(postTitle);
-      console.log(postContent);
+    
       let post = user?.posts;
       post[postIndex].content = postContent;
       post[postIndex].title = postTitle;
-      console.log(post)
-
+    
       let cloneUser = { ...user, posts: post };
       setUser(cloneUser);
 
@@ -76,7 +75,8 @@ export default function EditPostModel({ user, postIndex,setUser }: ModelType) {
       getAllUsers[currentUserIndex] = cloneUser;
       localStorage.setItem("socialUsers", JSON.stringify(getAllUsers));
 
-      handleClose(  )
+      handleClose()
+      setAnchorEl(null)
 
     }
   }
