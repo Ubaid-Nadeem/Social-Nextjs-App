@@ -64,7 +64,6 @@ export default function RecipeReviewCard({
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-    
   };
 
   const deletePOst = () => {
@@ -131,9 +130,7 @@ export default function RecipeReviewCard({
         />
 
         <CardContent style={{ height: "content-fit" }}>
-          <Typography variant="body2" color="text.secondary">
-            {userPost.content}
-          </Typography>
+          <Typography >{userPost.content}</Typography>
         </CardContent>
         <CardActions disableSpacing>
           <div
@@ -190,7 +187,12 @@ export default function RecipeReviewCard({
           }}
         >
           <MenuItem>
-            <EditPostModel postIndex={id} user={user} setUser={setUser} setAnchorEl={setAnchorEl}/>
+            <EditPostModel
+              postIndex={id}
+              user={user}
+              setUser={setUser}
+              setAnchorEl={setAnchorEl}
+            />
           </MenuItem>
           <MenuItem onClick={deletePOst}>Delete</MenuItem>
         </Menu>
