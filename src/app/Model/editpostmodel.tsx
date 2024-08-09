@@ -23,10 +23,15 @@ type ModelType = {
   user: UserType;
   postIndex: number;
   setUser: (e: any) => void;
-  setAnchorEl : (e:any)=>void
+  setAnchorEl: (e: any) => void;
 };
 
-export default function EditPostModel({ user, postIndex,setUser,setAnchorEl }: ModelType) {
+export default function EditPostModel({
+  user,
+  postIndex,
+  setUser,
+  setAnchorEl,
+}: ModelType) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -48,16 +53,14 @@ export default function EditPostModel({ user, postIndex,setUser,setAnchorEl }: M
 
   function updatePost() {
     if (postTitle?.length > 1 && postContent?.length > 1) {
-    
       let post = user?.posts;
       post[postIndex].content = postContent;
       post[postIndex].title = postTitle;
-    
+
       let cloneUser = { ...user, posts: post };
       setUser(cloneUser);
 
       localStorage.setItem("activeUser", JSON.stringify({ user: cloneUser }));
-
 
       let getAllUsers: any = JSON.parse(
         localStorage.getItem("socialUsers") as string
@@ -75,10 +78,13 @@ export default function EditPostModel({ user, postIndex,setUser,setAnchorEl }: M
       getAllUsers[currentUserIndex] = cloneUser;
       localStorage.setItem("socialUsers", JSON.stringify(getAllUsers));
 
-      handleClose()
-      setAnchorEl(null)
-
+      handleClose();
+      setAnchorEl(null);
     }
+  }
+  function Close() {
+    handleClose();
+    setAnchorEl(null)
   }
 
   return (
@@ -130,7 +136,7 @@ export default function EditPostModel({ user, postIndex,setUser,setAnchorEl }: M
               variant="outlined"
               color="error"
               style={{ marginLeft: "10px" }}
-              onClick={handleClose}
+              onClick={Close}
             >
               Cancel
             </Button>
